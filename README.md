@@ -1,32 +1,41 @@
-# Sistema de Correspondências
+# Plaza Shopping Center - Correspondence Management System
 
-Sistema completo de gestão de correspondências para shoppings, desenvolvido com Laravel 12 + React TypeScript.
+Complete correspondence management system for shopping centers, built with Laravel + React TypeScript and 4-level user access control.
 
-## 🚀 Funcionalidades
+## 🎯 Features
 
-### Principais
-- **Cadastro de Encomendas**: Portaria registra encomendas recebidas
-- **Gestão por Níveis**: Admin, Portaria e Loja com permissões específicas
-- **Confirmação de Retirada**: Foto + Assinatura digital + CPF
-- **Dashboard Analytics**: Métricas e estatísticas em tempo real
-- **Rastreabilidade Completa**: Logs de todas as ações
+### Core Features
+- **4-Level User System**: System Admin, Mall Manager, Reception Desk, Store Manager
+- **Package Registration**: Reception desk registers incoming packages
+- **Collection Workflow**: Photo + Digital signature + CPF verification
+- **Real-time Dashboard**: Analytics and metrics
+- **Complete Audit Trail**: Logs of all actions
+- **Role-based Permissions**: Granular access control
 
-### Por Tipo de Usuário
+### User Roles & Permissions
 
-#### 👨‍💼 Admin
-- Todos os acessos
-- Exclusão de encomendas (soft delete)
-- Visualização de todas as lojas
+#### 🔑 System Administrator
+- Full system access
+- User management
+- All store access
+- System configuration
 
-#### 🏢 Portaria
-- Cadastro de encomendas
-- Confirmação de retiradas
-- Devolução ao remetente
-- Visualização de todas as lojas
+#### 👨‍💼 Mall Manager
+- Manage all correspondence
+- Delete packages (soft delete)
+- View all stores
+- Process collections
 
-#### 🏪 Loja
-- Visualização das próprias encomendas
-- Confirmação de leitura de notificações
+#### 🏢 Reception Desk
+- Register new packages
+- Process collections
+- Return to sender
+- View all stores
+
+#### 🏪 Store Manager
+- View own store packages only
+- Track delivery status
+- Package history
 
 ## 🛠️ Stack Tecnológica
 
@@ -55,22 +64,30 @@ Sistema completo de gestão de correspondências para shoppings, desenvolvido co
 - **MySQL 8.0+**
 - **Docker** (opcional)
 
-## 🚀 Instalação
+## 🚀 Quick Start (Tomorrow's Presentation)
 
-### Opção 1: Docker (Recomendado)
+### Option 1: Docker (Recommended)
 
 ```bash
-# Clonar repositório
-git clone <repository-url>
+# Clone repository
+git clone <your-repository-url>
 cd app_correspondence
 
-# Subir containers
+# Start all services
 docker-compose up -d
 
-# Aguardar containers iniciarem e acessar:
-# Frontend: http://localhost:5173
+# Wait for containers to start (2-3 minutes)
+# Then access:
+# Frontend: http://localhost:3000
 # Backend: http://localhost:8000
 ```
+
+### ✅ System Ready!
+After containers start, the system is fully functional with:
+- ✅ Database populated with test data
+- ✅ 6 test users created
+- ✅ 5 sample packages
+- ✅ All 4 user roles working
 
 ### Opção 2: Instalação Manual
 
@@ -121,40 +138,60 @@ echo "VITE_API_URL=http://localhost:8000/api" > .env
 npm run dev
 ```
 
-## 👥 Usuários de Teste
+## 👥 Test Users (Ready for Demo)
 
-Após executar o seeder, estarão disponíveis:
+After seeding, these users are available:
 
-| Tipo | Email | Senha | Descrição |
-|------|-------|-------|-----------|
-| **Admin** | admin@contoso.com | password | Administrador geral |
-| **Portaria** | portaria@contoso.com | password | Usuário da portaria |
-| **Loja A** | loja.a@contoso.com | password | Lojista da Loja A |
-| **Loja B** | loja.b@contoso.com | password | Lojista da Loja B |
+| Role | Email | Password | Description |
+|------|-------|----------|-------------|
+| 🔑 **System Admin** | admin@plaza.com | password | Full system access |
+| 👨‍💼 **Mall Manager** | manager@plaza.com | password | Mall administration |
+| 🏢 **Reception** | reception@plaza.com | password | Package reception |
+| 🏪 **Fashion Store** | fashion@plaza.com | password | Fashion Store manager |
+| 🏪 **Electronics** | electronics@plaza.com | password | Electronics store |
+| 🏪 **Beauty Store** | beauty@plaza.com | password | Beauty store |
 
-## 📱 Como Usar
+### 🏢 Shopping Center: Plaza Shopping Center
+- 5 stores created (Fashion, Electronics, Beauty, Sports, Books)
+- 5 sample packages with different statuses
+- Professional English interface
 
-### 1. Acesso ao Sistema
-- Acesse `http://localhost:5173`
-- Faça login com um dos usuários de teste
+## 🎭 Demo Workflow (Tomorrow's Presentation)
 
-### 2. Cadastrar Encomenda (Portaria/Admin)
-- Vá em "Gerenciar Encomendas"
-- Clique em "Cadastrar Nova Encomenda"
-- Preencha: Loja, Código, Transportadora, Data, Tipo, etc.
-- Salve a encomenda
+### 1. System Access
+- Open `http://localhost:3000`
+- Login with any test user (password: `password`)
 
-### 3. Confirmar Retirada (Portaria/Admin)
-- Na lista de encomendas, clique em "Confirmar Retirada"
-- **Passo 1**: Digite nome e CPF do responsável
-- **Passo 2**: Capture foto com webcam
-- **Passo 3**: Colete assinatura digital
-- Confirme a retirada
+### 2. Test Complete Workflow
 
-### 4. Visualizar Dashboard
-- Dashboard mostra estatísticas
-- Encomendas pendentes, retiradas, devolvidas
-- Lista das encomendas mais recentes
+#### 📦 As Reception Desk (`reception@plaza.com`):
+1. Go to "Correspondências"
+2. Click "Nova Encomenda"
+3. Fill: Store = Fashion Store, Code = TEST123, Courier = FedEx
+4. Save package
+
+#### 🏪 As Store Manager (`fashion@plaza.com`):
+1. Login and see only Fashion Store packages
+2. Notice the new package appears
+3. Verify limited permissions (can't create/delete)
+
+#### 👨‍💼 As Mall Manager (`manager@plaza.com`):
+1. See all stores packages
+2. Click "Retirar" on TEST123 package
+3. Fill collector info: Name = "John Doe", CPF = "12345678900"
+4. Complete collection process
+
+#### 🔑 As System Admin (`admin@plaza.com`):
+1. Access "Users" menu (only visible to System Admin)
+2. See 4-level permission system explanation
+3. Full access to all features
+
+### 3. Key Demo Points
+- ✅ Role-based sidebar (different options per user)
+- ✅ Data filtering (stores see only their packages)
+- ✅ Permission-based buttons (create/delete/manage)
+- ✅ Professional UI with modern design
+- ✅ Complete audit trail and logging
 
 ## 🗂️ Estrutura do Projeto
 
