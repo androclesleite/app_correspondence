@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: correspondence_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: correspondence_db
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: laravel_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - correspondence_network
+
+  # PHP/Laravel Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: correspondence_backend
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+      - ./backend/storage/app:/var/www/storage/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mysql
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: correspondence_db
+      DB_USERNAME: laravel_user
+      DB_PASSWORD: laravel_password
+    networks:
+      - correspondence_network
+    command: php artisan serve --host=0.0.0.0 --port=8000
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: correspondence_frontend
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "3000:5173"
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+    networks:
+      - correspondence_network
+    command: npm run dev -- --host
+
+volumes:
+  mysql_data:
+
+networks:
+  correspondence_network:
+    driver: bridge
